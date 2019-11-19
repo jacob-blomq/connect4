@@ -1,0 +1,2 @@
+# connect4
+Our goal is to create a Connect4 game in which two players join a game and are presented with a game board with empty slots for tokens. Players will go through a process to decide which player makes the first move. Each player alternates turns dropping tokens into a column that he or she determines by column number, in which the token drops to the lowest available spot. Tokens may stack on top of one another. When 4 of one player’s tokens form a continuous line, whether horizontal, vertical, or diagonal — he or she wins the game and a new game may be started. 
