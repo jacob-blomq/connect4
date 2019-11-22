@@ -73,7 +73,7 @@ public class Board {
 			if(b.getColCount(column) < 7)
 			{
 				getBoard(b)[5 - b.getColCount(column)][column - 1] = b.playerOne;
-				b.colCount[column - 1] = b.getColCount(column) + 1;
+				b.colCount[column - 1]++;
 			}
 			
 		}
@@ -82,7 +82,7 @@ public class Board {
 			if(b.getColCount(column) < 7)
 			{
 				getBoard(b)[5 - b.getColCount(column)][column - 1] = b.playerOne;
-				b.colCount[column - 1] = b.getColCount(column) + 1;
+				b.colCount[column - 1]++;
 			}
 			
 		}
