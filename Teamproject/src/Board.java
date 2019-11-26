@@ -10,7 +10,7 @@ public class Board {
 	
 	char[][] boardArray;
 	
-	public Board(char playerOne, char PlayerTwo){
+	public Board(char playerOne, char playerTwo){
 		boardArray = new char[6][7];
 		this.playerOne = playerOne;
 		this.playerTwo = playerTwo;
@@ -67,31 +67,34 @@ public class Board {
 	}
 	
 	//executes turn by prompting player to place piece
-	public void turn(int player, int column, Board b){
-		if(player == 1) 
+	public boolean turn(int player, int column, Board b){
+		System.out.println("Player: " + player + "Pick a Column");
+		if(player == 0) 
 		{
-			if(b.getColCount(column) < 7)
+			if(b.getColCount(column) < 6)
 			{
 				getBoard(b)[5 - b.getColCount(column)][column - 1] = b.playerOne;
 				b.colCount[column - 1]++;
+				return true;
 			}
-			
+			System.out.println("This column is full! Pick another Column");
+			return false;
 		}
-		if(player == 2) 
+
+		if(b.getColCount(column) < 6)
 		{
-			if(b.getColCount(column) < 7)
-			{
-				getBoard(b)[5 - b.getColCount(column)][column - 1] = b.playerOne;
-				b.colCount[column - 1]++;
-			}
-			
+			getBoard(b)[5 - b.getColCount(column)][column - 1] = b.playerTwo;
+			b.colCount[column - 1]++;
+			return true;
 		}
+		System.out.println("This column is full! Pick another Column");
+		return false;
 		
 	}
 	
-	public int currentplayer() {
-		return(cplayer);
-	}
+	
+	public int currentplayer() { return(cplayer); }
+	 
 	
 	public void decideturn() {
 		Random rand = new Random();

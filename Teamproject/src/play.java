@@ -10,6 +10,9 @@ public class play {
 		int cp;
 		char pT;
 		char pO;
+		boolean valid;
+		
+		
 		
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Player 1 Select a Piece (any Character)");
@@ -18,7 +21,9 @@ public class play {
 		pT = scan.next().charAt(0);
 		Board board = new Board(pO, pT);
 		System.out.println("Setting up Board");
-		System.out.println(board.clearBoard(board));
+		board.clearBoard(board);
+		board.printBoard(board.getBoard(board));
+		
 		System.out.println("--------Let's chose who goes first---------");
 		
 		board.decideturn();
@@ -27,8 +32,21 @@ public class play {
 		board.printBoard(board.getBoard(board));
 		System.out.print("Pick a column: ");
 		
-		col = scan.nextInt();
-		board.turn(cp, col, board);
+		for(int i = 0; i < 42; i++)
+		{ 
+			col = scan.nextInt();
+			valid = board.turn(cp, col, board);
+			board.printBoard(board.getBoard(board));
+			while(valid == false)
+			{
+				col = scan.nextInt();
+				valid = board.turn(cp, col, board);
+				board.printBoard(board.getBoard(board));
+			}
+			cp = (cp + 1) % 2;
+			System.out.println(cp);
+		}
+		
 		board.printBoard(board.getBoard(board));
 	}
 
