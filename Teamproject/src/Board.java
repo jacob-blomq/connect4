@@ -29,7 +29,7 @@ public class Board {
 	
 	public int getColCount(int col)
 	{
-		return colCount[col - 1];
+		return colCount[col];
 	}
 	
 	
@@ -64,37 +64,35 @@ public class Board {
 				}
 			}
 		}
+		System.out.println(" 1  2  3  4  5  6  7");
 	}
 	
 	//executes turn by prompting player to place piece
 	public boolean turn(int player, int column, Board b){
-		System.out.println("Player: " + player + "Pick a Column");
+		column--;
 		if(player == 0) 
 		{
-			if(b.getColCount(column) < 6)
+			if(b.getColCount(column) <= 5)
 			{
-				getBoard(b)[5 - b.getColCount(column)][column - 1] = b.playerOne;
-				b.colCount[column - 1]++;
+				getBoard(b)[5 - b.getColCount(column)][column] = b.playerOne;
+				b.colCount[column]++;
 				return true;
 			}
 			System.out.println("This column is full! Pick another Column");
 			return false;
 		}
 
-		if(b.getColCount(column) < 6)
+		if(b.getColCount(column) <= 5)
 		{
-			getBoard(b)[5 - b.getColCount(column)][column - 1] = b.playerTwo;
-			b.colCount[column - 1]++;
+			getBoard(b)[5 - b.getColCount(column)][column] = b.playerTwo;
+			b.colCount[column]++;
 			return true;
 		}
 		System.out.println("This column is full! Pick another Column");
 		return false;
-		
 	}
 	
-	
 	public int currentplayer() { return(cplayer); }
-	 
 	
 	public void decideturn() {
 		Random rand = new Random();
