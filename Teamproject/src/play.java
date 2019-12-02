@@ -28,13 +28,13 @@ public class play {
 			System.out.println("--------Let's chose who goes first---------");
 			board.decideturn();
 			cp = board.currentplayer();
-			System.out.println("\nPlayer " + (cp+1) + " your turn first!");	
+			System.out.println("\nPlayer " + (cp) + " your turn first!");	
 			board.printBoard(board.getBoard(board));
 			
 			//Game Loop
 			for(int i = 0; i < 42; i++)
 			{ 
-				System.out.print("Player " + (cp+1) + " Pick a Column: ");
+				System.out.print("Player " + (cp) + " Pick a Column: ");
 				col = scan.nextInt();
 				if(col > 7)
 				{
@@ -60,7 +60,20 @@ public class play {
 							board.printBoard(board.getBoard(board));
 						}	
 					}
-					cp = (cp + 1) % 2;
+				}
+				boolean status = board.checkWin(cp);
+				if(status == true)
+				{
+					System.out.println("Player: " + cp + " Wins!");
+					break;
+				}
+				if(cp == 1)
+				{
+					cp = 2;
+				}
+				else if(cp == 2)
+				{
+					cp = 1;
 				}
 			}
 			System.out.print("Play Again?: Y/N: ");

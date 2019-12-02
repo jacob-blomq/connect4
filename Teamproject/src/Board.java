@@ -15,6 +15,7 @@ public class Board {
 		this.playerOne = playerOne;
 		this.playerTwo = playerTwo;
 		colCount = new int[7];
+		cplayer = 0;
 	}
 	
 	public char getPlayerOne()
@@ -70,7 +71,7 @@ public class Board {
 	//executes turn by prompting player to place piece
 	public boolean turn(int player, int column, Board b){
 		column--;
-		if(player == 0) 
+		if(player == 1) 
 		{
 			if(b.getColCount(column) <= 5)
 			{
@@ -96,20 +97,54 @@ public class Board {
 	
 	public void decideturn() {
 		Random rand = new Random();
-		cplayer = rand.nextInt(1 + 2);
+		cplayer = rand.nextInt(2) + 1;
 	}
 	
-	//checks whether p1 or p2 has won the game
-	public boolean checkWin(char[][]board, char playerOne, char playerTwo) {
-		//if row is found return true
-		if(true)
-		{ 
-			return true;
-		}
-		else //if no rows found return false
+	
+	public boolean checkWin(int cp) {
+		char current = 0;
+		
+		if(cp == 1)
 		{
-			return false;
+			current = getPlayerOne();
 		}
+		if(cp == 2)
+		{
+			current = getPlayerTwo();
+		}
+		//check horizontal 
+		for (int row = 0; row < boardArray.length; row++){
+			for (int col = 0; col < boardArray[row].length; col++){
+				if (boardArray[row][col] == current && boardArray[row][col] == boardArray[row][col+1] && boardArray[row][col] == boardArray[row][col+2] && boardArray[row][col] == boardArray[row][col +3]){
+					return true;
+				}
+			}
+		}
+		//check vertical
+		for (int col = 0; col < boardArray[0].length; col++){
+			for (int row = 0; row < boardArray.length - 3; row++){
+				if (boardArray[row][col] == current && boardArray[row][col] == boardArray[row+1][col] && boardArray[row][col] == boardArray[row+2][col] && boardArray[row][col] == boardArray[row+3][col]){
+					return true;
+				}
+			}
+		}
+		//check first diagonal 
+		for (int row = 0; row < boardArray.length - 3; row++){
+			for (int col = 0; col < boardArray[row].length - 3; col++){
+				if (boardArray[row][col] == current && boardArray[row][col] == boardArray[row+1][col +1] && boardArray[row][col] == boardArray[row+2][col+2] && boardArray[row][col] == boardArray[row+3][col+3]){
+					return true;
+				}
+			}
+		}
+		//check second diagonal
+		for (int row = 0; row < boardArray.length - 3; row++){ 
+			for (int col = 3; col < boardArray[row].length; col++){
+				if (boardArray[row][col] == current && boardArray[row][col] == boardArray[row+1][col-1] && boardArray[row][col] == boardArray[row+2][col-2] && boardArray[row] [col] == boardArray[row+3][col-3]){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	//used for printing our board array
