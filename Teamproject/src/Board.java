@@ -66,7 +66,7 @@ public class Board {
 				}
 			}
 		}
-		boardString+= "\n"+ " 1  2  3  4  5  6  7";
+		boardString+= " 1  2  3  4  5  6  7";
 		return boardString;
 	}
 	
