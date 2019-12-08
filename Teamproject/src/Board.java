@@ -48,8 +48,9 @@ public class Board {
 		return boardArray;
 	}
 	
-	public void printBoard(char[][] boardArray)
+	public String printBoard(char[][] boardArray)
 	{
+		String boardString = "";
 		System.out.println(" ");
 		for(int i = 0; i < boardArray.length; i++)
 		{
@@ -57,15 +58,16 @@ public class Board {
 			{
 				if(j == 6)
 				{
-					System.out.println("|" + boardArray[i][j] + "|");
+					boardString+= "|" + boardArray[i][j] + "|" + "\n";
 				}
 				else
 				{
-					System.out.print("|" + boardArray[i][j] + "|");
+					boardString+= "|" + boardArray[i][j] + "|";
 				}
 			}
 		}
-		System.out.println(" 1  2  3  4  5  6  7");
+		boardString+= "\n"+ " 1  2  3  4  5  6  7";
+		return boardString;
 	}
 	
 	//executes turn by prompting player to place piece

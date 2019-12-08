@@ -29,7 +29,7 @@ public class play {
 			board.decideturn();
 			cp = board.currentplayer();
 			System.out.println("\nPlayer " + (cp) + " your turn first!");	
-			board.printBoard(board.getBoard(board));
+			System.out.println(board.printBoard(board.getBoard(board)));
 			
 			//Game Loop
 			for(int i = 0; i < 42; i++)
@@ -44,7 +44,7 @@ public class play {
 				else
 				{
 					valid = board.turn(cp, col, board);
-					board.printBoard(board.getBoard(board));
+					System.out.println(board.printBoard(board.getBoard(board)));
 					while(valid == false)
 					{
 						System.out.print("Player " + (cp+1) + " Pick a Column: ");
@@ -57,7 +57,7 @@ public class play {
 						else
 						{
 							valid = board.turn(cp, col, board);
-							board.printBoard(board.getBoard(board));
+							System.out.println(board.printBoard(board.getBoard(board)));
 						}	
 					}
 				}
