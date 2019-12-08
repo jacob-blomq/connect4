@@ -58,6 +58,13 @@ class BoardTest {
 		  boolean result = instance.checkWin(1);
 		  assertFalse(result);
 		  }
+	
+	 @Test 
+	  void testDecideTurn() {
+		  instance.decideturn();
+		  result = instance.cplayer;
+		  assertTrue(result.equals(1) || result.equals(2));
+	  }
 	  
 
 }
