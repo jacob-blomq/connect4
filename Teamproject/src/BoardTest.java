@@ -62,9 +62,21 @@ class BoardTest {
 	 @Test 
 	  void testDecideTurn() {
 		  instance.decideturn();
-		  result = instance.cplayer;
+		  int result = instance.cplayer;
 		  assertTrue(result.equals(1) || result.equals(2));
 	  }
+	
+	 @Test
+	  void testPrintBoard() {
+		  String result = instance.printBoard(instance.boardArray);
+		  String expected = ("|O||O||O||O||O||O||O|\n"
+				   + "|O||O||O||O||O||O||O|\n"
+		  		   + "|O||O||O||O||O||O||O|\n"
+		  		   + "|O||O||O||O||O||O||O|\n"
+		  		   + "|O||O||O||O||O||O||O|\n
+				   + "|O||O||O||O||O||O||O|\n"
+				   + " 1  2  3  4  5  6  7");
+		  assertEquals(result, expected);
 	  
 
 }
