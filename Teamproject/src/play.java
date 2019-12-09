@@ -27,7 +27,7 @@ public class play {
 			//Deciding First Player
 			System.out.println("--------Let's chose who goes first---------");
 			board.decideturn();
-			cp = board.currentplayer();
+			cp = board.getStartingPlayer();
 			System.out.println("\nPlayer " + (cp) + " your turn first!");	
 			System.out.println(board.printBoard(board.getBoard(board)));
 			

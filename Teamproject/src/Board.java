@@ -4,7 +4,7 @@ public class Board {
 	
 	char playerOne;
 	char playerTwo;
-	int cplayer;
+	int startingPlayer;
 	
 	int[] colCount;
 	
@@ -15,7 +15,7 @@ public class Board {
 		this.playerOne = playerOne;
 		this.playerTwo = playerTwo;
 		colCount = new int[7];
-		cplayer = 0;
+		startingPlayer = 0;
 	}
 	
 	public char getPlayerOne()
@@ -95,11 +95,11 @@ public class Board {
 		return false;
 	}
 	
-	public int currentplayer() { return(cplayer); }
+	public int getStartingPlayer() { return(startingPlayer); }
 	
 	public void decideturn() {
 		Random rand = new Random();
-		cplayer = rand.nextInt(2) + 1;
+		startingPlayer = rand.nextInt(2) + 1;
 	}
 	
 	
@@ -116,7 +116,7 @@ public class Board {
 		}
 		//check horizontal 
 		for (int row = 0; row < boardArray.length; row++){
-			for (int col = 0; col < boardArray[row].length; col++){
+			for (int col = 0; col < boardArray[row].length - 3; col++){
 				if (boardArray[row][col] == current && boardArray[row][col] == boardArray[row][col+1] && boardArray[row][col] == boardArray[row][col+2] && boardArray[row][col] == boardArray[row][col +3]){
 					return true;
 				}
