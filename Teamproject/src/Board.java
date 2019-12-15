@@ -4,11 +4,10 @@ public class Board {
 	
 	char playerOne;
 	char playerTwo;
-	int cplayer;
-	int winner = 0;
-	int turnCount = 0;
+	int startingPlayer;
+	char currentPlayer;
 	int[] colCount;
-	boolean turnValid;
+	
 	char[][] boardArray;
 	
 	public Board(char playerOne, char playerTwo){
@@ -16,6 +15,7 @@ public class Board {
 		this.playerOne = playerOne;
 		this.playerTwo = playerTwo;
 		colCount = new int[7];
+		startingPlayer = 0;
 	}
 	
 	public char getPlayerOne()
@@ -48,8 +48,9 @@ public class Board {
 		return boardArray;
 	}
 	
-	public void printBoard(char[][] boardArray)
+	public String printBoard(char[][] boardArray)
 	{
+		String boardString = "";
 		System.out.println(" ");
 		for(int i = 0; i < boardArray.length; i++)
 		{
@@ -57,84 +58,95 @@ public class Board {
 			{
 				if(j == 6)
 				{
-					System.out.println("|" + boardArray[i][j] + "|");
+					boardString+= "|" + boardArray[i][j] + "|" + "\n";
 				}
 				else
 				{
-					System.out.print("|" + boardArray[i][j] + "|");
+					boardString+= "|" + boardArray[i][j] + "|";
 				}
 			}
 		}
-		System.out.println(" 1  2  3  4  5  6  7");
+		boardString+= " 1  2  3  4  5  6  7";
+		return boardString;
 	}
 	
 	//executes turn by prompting player to place piece
-	public boolean turn(int player, int column, Board b){
-		column--;
-		if(player == 0) 
-		{
-			if(b.getColCount(column) <= 5)
+	public boolean turn(int player, int column){
+		if (player == 1) {
+			currentPlayer = this.playerOne;
+		}
+		else {
+			currentPlayer = this.playerTwo;
+		}
+		column--; 
+			if(this.getColCount(column) <= 5)
 			{
-				getBoard(b)[5 - b.getColCount(column)][column] = b.playerOne;
-				b.colCount[column]++;
-				this.turnValid = true;
+				getBoard(this)[5 - this.getColCount(column)][column] = this.currentPlayer;
+				this.colCount[column]++;
 				return true;
 			}
 			System.out.println("This column is full! Pick another Column");
-			this.turnValid = false;
 			return false;
 		}
-
-		if(b.getColCount(column) <= 5)
-		{
-			getBoard(b)[5 - b.getColCount(column)][column] = b.playerTwo;
-			b.colCount[column]++;
-			this.turnValid = true;
-			return true;
-		}
-		System.out.println("This column is full! Pick another Column");
-		this.turnValid = false;
-		return false;
-	}
 	
-	public int currentplayer() { return(cplayer); }
+	public int getStartingPlayer() { return(startingPlayer); }
 	
 	public void decideturn() {
 		Random rand = new Random();
-		cplayer = rand.nextInt(1 + 2);
+		startingPlayer = rand.nextInt(2) + 1;
 	}
 	
-	//checks whether p1 or p2 has won the game
-	public boolean checkWin(char[][]board, char playerOne, char playerTwo) {
-		//if row is found return true
-		if(true)
-		{ 
-			return true;
-		}
-		else //if no rows found return false
+	
+	public boolean checkWin(int cp) {
+		char current = 0;
+		
+		if(cp == 1)
 		{
-			return false;
+			current = getPlayerOne();
 		}
+		if(cp == 2)
+		{
+			current = getPlayerTwo();
+		}
+		//check horizontal 
+		for (int row = 0; row < boardArray.length; row++){
+			for (int col = 0; col < boardArray[row].length - 3; col++){
+				if (boardArray[row][col] == current && boardArray[row][col] == boardArray[row][col+1] && boardArray[row][col] == boardArray[row][col+2] && boardArray[row][col] == boardArray[row][col +3]){
+					return true;
+				}
+			}
+		}
+		//check vertical
+		for (int col = 0; col < boardArray[0].length; col++){
+			for (int row = 0; row < boardArray.length - 3; row++){
+				if (boardArray[row][col] == current && boardArray[row][col] == boardArray[row+1][col] && boardArray[row][col] == boardArray[row+2][col] && boardArray[row][col] == boardArray[row+3][col]){
+					return true;
+				}
+			}
+		}
+		//check first diagonal 
+		for (int row = 0; row < boardArray.length - 3; row++){
+			for (int col = 0; col < boardArray[row].length - 3; col++){
+				if (boardArray[row][col] == current && boardArray[row][col] == boardArray[row+1][col +1] && boardArray[row][col] == boardArray[row+2][col+2] && boardArray[row][col] == boardArray[row+3][col+3]){
+					return true;
+				}
+			}
+		}
+		//check second diagonal
+		for (int row = 0; row < boardArray.length - 3; row++){ 
+			for (int col = 3; col < boardArray[row].length; col++){
+				if (boardArray[row][col] == current && boardArray[row][col] == boardArray[row+1][col-1] && boardArray[row][col] == boardArray[row+2][col-2] && boardArray[row] [col] == boardArray[row+3][col-3]){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	//used for printing our board array
 	public char[][] getBoard(Board b)
 	{
 		return boardArray;
-	}
-
-	public void endGame() {
-		if (this.winner == 1) {
-			System.out.println("Congratulations! Player 1 wins!");
-		}
-
-		if (this.winner == 2) {
-			System.out.println("Congratulations! Player 2 wins!");
-		}
-
-		if (this.winner == 0) {
-			System.out.println("It's a tie!");
-		}	
 	}
 	
 }
