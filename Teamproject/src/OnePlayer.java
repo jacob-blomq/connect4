@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class OnePlayer {
@@ -27,51 +28,169 @@ public class OnePlayer {
 			board.decideturn();
 			cp = board.getStartingPlayer();
 			System.out.println("\nPlayer " + (cp) + " your turn first!");	
-			System.out.println(board.printBoard(board.getBoard(board)));
+			System.out.println(board.printBoard(board.boardArray));
 			
 			//Game Loop
 			for(int i = 0; i < 42; i++)
 			{ 
-				System.out.print("Player " + (cp) + " Pick a Column: ");
-				col = scan.nextInt();
-				if(col > 7)
-				{
-					System.out.println("Please Pick a Column 1-7!");
+				if (cp == 1) {
+					System.out.print("Player " + (cp) + " Pick a Column: ");
 					col = scan.nextInt();
-				}
-				else
-				{
-					valid = board.turn(cp, col, board);
-					System.out.println(board.printBoard(board.getBoard(board)));
-					while(valid == false)
+					if(col > 7)
 					{
-						System.out.print("Player " + (cp+1) + " Pick a Column: ");
+						System.out.println("Please Pick a Column 1-7!");
 						col = scan.nextInt();
-						if(col > 7)
+					}
+					else
+					{
+						
+						valid = board.turn(cp, col, board);
+						System.out.println(board.printBoard(board.boardArray));
+						while(valid == false)
 						{
-							System.out.println("Please Pick a Column 1-7!");
+							System.out.print("Player " + (cp+1) + " Pick a Column: ");
 							col = scan.nextInt();
+							if(col > 7)
+							{
+								System.out.println("Please Pick a Column 1-7!");
+								col = scan.nextInt();
+							}
+							else
+							{
+								valid = board.turn(cp, col, board);
+								System.out.println(board.printBoard(board.boardArray));
+							}
+						
 						}
-						else
-						{
-							valid = board.turn(cp, col, board);
-							System.out.println(board.printBoard(board.getBoard(board)));
-						}	
+					
+					}
+					boolean status = board.checkWin(cp);
+					if(status == true)
+					{
+						System.out.println("Player: " + cp + " Wins!");
+						break;
+					}
+					if(cp == 1)
+					{
+						cp = 2;
+					}
+					else if(cp == 2)
+					{
+						cp = 1;
 					}
 				}
-				boolean status = board.checkWin(cp);
-				if(status == true)
-				{
-					System.out.println("Player: " + cp + " Wins!");
-					break;
-				}
-				if(cp == 1)
-				{
-					cp = 2;
-				}
-				else if(cp == 2)
-				{
-					cp = 1;
+				else {
+					col = 0;
+					System.out.print("AI picking a column: ");
+					char current = board.playerOne;
+					char AI = board.playerTwo;
+					boolean aiStatus = false;
+					Random rand = new Random();
+					col = rand.nextInt(7) + 1;
+					
+					// AI blocks if 3 enemy horizontal pieces seen in a row
+					for (int row = 0; row < board.boardArray.length; row++){
+						for (int column = 0; column < board.boardArray[row].length - 3; column++){
+							if (board.boardArray[row][column] == current && board.boardArray[row][column+1] == current && board.boardArray[row][column+2] == current){
+								if (column + 4 < 7) {
+									col = column - 1;
+									System.out.println("Blocked");
+									aiStatus = true;
+									break;
+								}
+								else {
+									col = column + 4;
+									System.out.println("Blocked");
+									aiStatus = true;
+									break;
+								}
+							}							
+						}
+					}
+					// AI blocks if 3 enemy vertical pieces seen in a row
+					if(aiStatus == false)
+					{
+						for (int column = 0; column < board.boardArray[0].length; column++){
+							for (int row = 0; row < board.boardArray.length - 3; row++){
+								if (board.boardArray[row][column] == current && board.boardArray[row+1][column] == current && board.boardArray[row+2][column] == current && board.boardArray[row+3][column] == '0'){
+									if (col + 5 < 7) {
+										col = column + 3;
+										System.out.println("vertical");
+										aiStatus = true;
+										break;
+									}
+								}							
+							}
+						}
+					}
+					
+					// AI places if three friendly pieces are seen in a row
+					col = rand.nextInt(7) + 1;
+					if(aiStatus == false)
+					{
+						for (int row = 0; row < board.boardArray.length; row++){
+							for (int column = 0; column < board.boardArray[row].length - 3; column++){
+								if (board.boardArray[row][column] == '0' && board.boardArray[row][column+1] == AI && board.boardArray[row][column+2] == AI && board.boardArray[row][column+3] == AI){
+									System.out.println("Found a win on the left");
+									col = column;
+									aiStatus = true;
+									break;
+								}
+								if (board.boardArray[row][column] == AI && board.boardArray[row][column+1] == AI && board.boardArray[row][column+2] == AI && board.boardArray[row][column+3] == '0')
+								{
+									System.out.println("Found a win on the right");
+									col = column + 3;
+									aiStatus = true;
+									break;
+								}
+								
+							}
+						
+						}
+					}
+					if(col > 7)
+					{
+						System.out.println("col bigger than 7, doing rand");
+						col = rand.nextInt(7) + 1;
+					}
+					else
+					{
+						System.out.println(col);
+						valid = board.turn(cp, col, board);
+						System.out.println(board.printBoard(board.boardArray));
+						while(valid == false)
+						{
+							System.out.print("Player " + (cp+1) + " Pick a Column: ");
+							System.out.print("here");
+							col = rand.nextInt(7) + 1;
+							if(col > 7)
+							{
+								System.out.println("going here");
+								col = rand.nextInt(7) + 1;
+							}
+							else
+							{
+								valid = board.turn(cp, col, board);
+								System.out.println(board.printBoard(board.boardArray));
+							}
+						
+						}
+					
+					}
+					boolean status = board.checkWin(cp);
+					if(status == true)
+					{
+						System.out.println("Player: " + cp + " Wins!");
+						break;
+					}
+					if(cp == 1)
+					{
+						cp = 2;
+					}
+					else if(cp == 2)
+					{
+						cp = 1;
+					}
 				}
 			}
 			System.out.print("Play Again?: Y/N: ");
@@ -82,5 +201,4 @@ public class OnePlayer {
 			}
 		}
 	}		
-
 }
