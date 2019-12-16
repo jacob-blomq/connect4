@@ -80,25 +80,60 @@ public class OnePlayer {
 					}
 				}
 				else {
-					System.out.print("AI picking a column");
+					col = 0;
+					System.out.print("AI picking a column: ");
+					char current = board.playerOne;
+					char AI = board.playerTwo;
+					
 					Random rand = new Random();
-					col = rand.nextInt(8) + 1;
+					col = rand.nextInt(7) + 1;
+					// AI blocks if 3 enemy horizontal pieces seen in a row
+					for (int row = 0; row < board.boardArray.length; row++){
+						for (int column = 0; column < board.boardArray[row].length - 3; column++){
+							if (board.boardArray[row][column] == current && board.boardArray[row][column+1] == current && board.boardArray[row][column+2] == current){
+								if (column + 3 > 7) {
+									col = column - 3;
+								}
+								else {
+									col = column + 1;
+								}
+							}							
+						}
+					}
+					// AI places if three friendly pieces are seen in a row
+					col = rand.nextInt(7) + 1;
+					for (int row = 0; row < board.boardArray.length; row++){
+						for (int column = 0; column < board.boardArray[row].length - 3; column++){
+							if (board.boardArray[row][column] == AI && board.boardArray[row][column+1] == AI && board.boardArray[row][column+2] == AI){
+								if (column > 1000) {
+									System.out.println("Found a win on the left");
+									col = column - 1;
+								}
+								else {
+									System.out.println("Found a win on the right");
+									col = column + 4;
+								}
+							}
+							
+						}
+					}
 					if(col > 7)
 					{
+						System.out.println("col bigger than 7, doing rand");
 						col = rand.nextInt(7) + 1;
 					}
 					else
 					{
-						
+						System.out.println(col);
 						valid = board.turn(cp, col);
 						System.out.println(board.printBoard(board.boardArray));
 						while(valid == false)
 						{
 							System.out.print("Player " + (cp+1) + " Pick a Column: ");
-							col = rand.nextInt(8) + 1;
+							col = rand.nextInt(7) + 1;
 							if(col > 7)
 							{
-								col = rand.nextInt(8) + 1;
+								col = rand.nextInt(7) + 1;
 							}
 							else
 							{
@@ -134,3 +169,4 @@ public class OnePlayer {
 		}
 	}		
 }
+
