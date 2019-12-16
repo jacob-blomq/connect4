@@ -113,8 +113,8 @@ public class OnePlayer {
 						for (int column = 0; column < board.boardArray[0].length; column++){
 							for (int row = 0; row < board.boardArray.length - 3; row++){
 								if (board.boardArray[row][column] == current && board.boardArray[row+1][column] == current && board.boardArray[row+2][column] == current && board.boardArray[row+3][column] == '0'){
-									if (col + 5 < 7) {
-										col = column + 3;
+									if (row + 3 < 7) {
+										col = column;
 										System.out.println("vertical");
 										aiStatus = true;
 										break;
