@@ -36,7 +36,7 @@ public class Board {
 	
 	//clears board and fills it with emptyPiece variable
 	public char[][] clearBoard(Board b){
-		char emptyP = 'O';
+		char emptyP = ' ';
 		for(int i = 0; i < boardArray.length; i++)
 		{
 			for(int j = 0; j < boardArray[i].length; j++)
@@ -150,3 +150,4 @@ public class Board {
 	}
 	
 }
+
