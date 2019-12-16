@@ -1,3 +1,6 @@
+package cn5;
+
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -91,11 +94,11 @@ public class OnePlayer {
 					for (int row = 0; row < board.boardArray.length; row++){
 						for (int column = 0; column < board.boardArray[row].length - 3; column++){
 							if (board.boardArray[row][column] == current && board.boardArray[row][column+1] == current && board.boardArray[row][column+2] == current){
-								if (column + 3 > 7) {
-									col = column - 3;
+								if (column + 5 < 7) {
+									col = column - 1;
 								}
 								else {
-									col = column + 1;
+									col = column + 4;
 								}
 							}							
 						}
@@ -105,9 +108,9 @@ public class OnePlayer {
 					for (int row = 0; row < board.boardArray.length; row++){
 						for (int column = 0; column < board.boardArray[row].length - 3; column++){
 							if (board.boardArray[row][column] == AI && board.boardArray[row][column+1] == AI && board.boardArray[row][column+2] == AI){
-								if (column > 1000) {
+								if (column + 4 > 7) {
 									System.out.println("Found a win on the left");
-									col = column - 1;
+									col = column;
 								}
 								else {
 									System.out.println("Found a win on the right");
@@ -130,9 +133,11 @@ public class OnePlayer {
 						while(valid == false)
 						{
 							System.out.print("Player " + (cp+1) + " Pick a Column: ");
+							System.out.print("here");
 							col = rand.nextInt(7) + 1;
 							if(col > 7)
 							{
+								System.out.println("going here");
 								col = rand.nextInt(7) + 1;
 							}
 							else
@@ -169,4 +174,3 @@ public class OnePlayer {
 		}
 	}		
 }
-
